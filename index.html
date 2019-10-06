@@ -20,35 +20,35 @@
         </div>
         <div class="row">
             <div class="col-sm align-self-center">
-                <form>
+                <form action="/cgi-bin/handler.py" method="get">
                     <div class="form-group">
                         <label for="transdate">Transaction date</label>
-                        <input id="transdate" class="form-control" type="date"/>
+                        <input id="transdate" class="form-control" type="date" name="transdate">
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" label="transclear">
+                        <input class="form-check-input" type="checkbox" label="transclear" name="transclear">
                         <label class="form-check-label" for="transclear">Transaction cleared?</label>
                     </div>
                     <div class="form-group">
                         <label for="transrep">Transaction Recipient</label>
-                        <input id="transrep" class=form-control>
+                        <input id="transrep" class=form-control name="transrep">
                     </div>
                     <label>From</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Account">
+                            <input type="text" class="form-control" placeholder="From-Account" name="fromacc">
                         </div>
                         <div class="col">
-                            <input type="number" class="form-control" placeholder="Amount">
+                            <input type="number" class="form-control" placeholder="Amount" name="fromamount">
                         </div>
                     </div>
                     <label>To</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Account">
+                            <input type="text" class="form-control" placeholder="Account" name="toacc">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    <button type="submit" class="btn btn-dark mt-3">Submit</button>
                 </form>
             </div>
         </div>
