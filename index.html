@@ -19,6 +19,13 @@
             <p class="lead m-3">This is an input tool for <code>ledger-cli</code></p>
         </div>
         <div class="row">
+            <div class="col">
+                <div class="alert alert-success fade" role="alert" id="successAlert">
+                    <strong>Success.</strong> Transaction written to ledger-file.
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm align-self-center">
                 <form name="ledgerform" action="/cgi-bin/handler.py" method="get">
                     <div class="form-group">
@@ -65,7 +72,9 @@
     <script type="text/javascript">
         function finishSubmit() {
             if(document.getElementById) {
-                document.ledgerform.reset()
+                document.ledgerform.reset();
+                $('#successAlert').addClass('show');
+                setTimeout(function () {$('#successAlert').removeClass('show');}, 2000);
             }
         }
     </script>
