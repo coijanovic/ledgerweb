@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import subprocess
 
 app = Flask(__name__)
 
@@ -35,14 +36,15 @@ def submit():
 
     transdate = transdate.replace("-","/")
 
-    ledgerfile = open("test.txt","a")
+    ledgerfile = open("lweb.ledger","a")
     ledgerfile.write(transdate + c + transrep + "\n")
     ledgerfile.write("    " + fromacc + "          " + fromamount + "\n")
     ledgerfile.write("    " + toacc + "        " + toamount + "\n\n")
     ledgerfile.close()
-
+    
+    r = subprocess.call("rclone sync lweb.ledger Nextcloud:/accounting/", shell = True)
     return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.0.221')
+    app.run(debug=False, host='192.168.0.221')
