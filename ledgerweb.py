@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -6,7 +6,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/submit', methods = ['POST', 'GET'])
+@app.route('/submit', methods = ['GET'])
 def submit():
     transdate = request.args.get('transdate') 
     transclear = request.args.get('transclear') 
@@ -41,7 +41,7 @@ def submit():
     ledgerfile.write("    " + toacc + "        " + toamount + "\n\n")
     ledgerfile.close()
 
-    return str(response),200
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
