@@ -14,4 +14,5 @@ Ledgerweb is intended to be run as a local webservice. It provides an easy way t
 1. Clone this repository
 2. Setup your cloud storage with `rclone config` and edit line 45 in `ledgerweb.py` to match your configuration
     - to only use local storage, remove line 45 from `ledgerweb.py`
+3. Modify `accounts.txt` to contain all accounts (e.g "Expenses:Food:Groceries") you use in your ledger-file. This used for auto-completion.
 3. `python3 ledgerweb.py`

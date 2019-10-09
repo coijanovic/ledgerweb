@@ -5,7 +5,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    with open('accounts.txt', 'r') as f:
+        ac = f.read().splitlines()
+    
+    return render_template('index.html', ac=ac)
 
 @app.route('/submit', methods = ['GET'])
 def submit():
