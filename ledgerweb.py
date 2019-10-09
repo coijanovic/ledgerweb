@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import subprocess
 
+with open('accounts.txt', 'r') as f:
+    ac = f.read().splitlines()
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    with open('accounts.txt', 'r') as f:
-        ac = f.read().splitlines()
-    
     return render_template('index.html', ac=ac)
 
 @app.route('/submit', methods = ['GET'])
@@ -50,4 +50,4 @@ def submit():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='192.168.0.221')
+    app.run(debug=False, host='0.0.0.0')
