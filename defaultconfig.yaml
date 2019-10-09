@@ -1,0 +1,16 @@
+# This is the config file for ledgerweb
+#
+# 1. flask
+hostip: 0.0.0.0
+hostport: 5000
+
+# 2. rclone
+remotename: Nextcloud
+remotepath: /accounting/
+
+# 3. ledger
+currency: EUR
+accounts:
+- Assets:Checking
+- Expenses:Food
+- Income:Paycheck
