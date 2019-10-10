@@ -3,7 +3,7 @@ import subprocess
 import os.path
 import yaml
 
-if os.path.exists('/config.yaml'):
+if os.path.exists('config.yaml'):
     configfile = 'config.yaml'
 else:
     configfile = 'defaultconfig.yaml'
