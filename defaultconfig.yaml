@@ -14,3 +14,13 @@ accounts:
 - Assets:Checking
 - Expenses:Food
 - Income:Paycheck
+favs:
+    EDEKA:
+        from: Assets:Checking
+        to: Expenses:Food
+    REWE:
+        from: Assets:Checking
+        to: Expenses:Food
+    Alnatura:
+        from: Assets:Checking
+        to: Expenses:Food

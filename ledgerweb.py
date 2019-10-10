@@ -79,5 +79,11 @@ def reports():
 
     return render_template('reports.html', reps=reps)
 
+@app.route('/fav')
+def favorites():
+    favs = list(config['favs'].keys())
+
+    return render_template('favs.html', favs=favs)
+
 if __name__ == '__main__':
     app.run(debug=False, host=config['hostip'], port=config['hostport'])
