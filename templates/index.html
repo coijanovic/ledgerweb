@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Quick input</h1>
+    <div class="row">
+        <p class="lead m-3">This is an input tool for <code>ledger-cli</code></p>
+    </div>
     <form action="/fsubmit" method="get">
         <div class="form-group">
             <label for="fselect">Recipient</label>
