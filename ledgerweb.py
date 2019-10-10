@@ -17,12 +17,12 @@ with open(configfile, 'r') as f:
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
+@app.route('/input')
+def input():
     cmd = "rclone sync {rname}:{rpath}/finance.ledger  data/".format(rname=config['remotename'], rpath=config['remotepath'])
     r = subprocess.call(cmd, shell=True)
 
-    return render_template('index.html', ac=config['accounts'])
+    return render_template('input.html', ac=config['accounts'])
 
 @app.route('/submit', methods = ['GET'])
 def submit():
@@ -63,7 +63,7 @@ def submit():
     cmd = "rclone sync data/finance.ledger {rname}:{rpath}".format(rname=config['remotename'], rpath=config['remotepath'])
     
     r = subprocess.call(cmd, shell = True)
-    return redirect(url_for('index'))
+    return redirect(url_for('input'))
 
 @app.route('/reports')
 def reports():
@@ -80,11 +80,11 @@ def reports():
 
     return render_template('reports.html', reps=reps)
 
-@app.route('/fav')
+@app.route('/')
 def favorites():
     favs = list(config['favs'].keys())
 
-    return render_template('favs.html', favs=favs)
+    return render_template('index.html', favs=favs)
 
 @app.route('/fsubmit', methods = ['GET'])
 def fsubmit():
