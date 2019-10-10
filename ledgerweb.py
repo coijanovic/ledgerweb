@@ -1,14 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for
 import subprocess
+import os.path
+import yaml
 
-with open('accounts.txt', 'r') as f:
-    ac = f.read().splitlines()
+if os.path.exists('/config.yaml'):
+    configfile = 'config.yaml'
+else:
+    configfile = 'defaultconfig.yaml'
+
+with open(configfile, 'r') as f:
+    try:
+        config = yaml.safe_load(f)
+    except yaml.YAMLError as exc:
+        print(exc)
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', ac=ac)
+    return render_template('index.html', ac=config['accounts'])
 
 @app.route('/submit', methods = ['GET'])
 def submit():
@@ -45,13 +55,16 @@ def submit():
     ledgerfile.write("    " + fromacc + "          " + fromamount + "\n")
     ledgerfile.write("    " + toacc + "        " + toamount + "\n\n")
     ledgerfile.close()
+
+    cmd = "rclone sync data/finance.ledger {rname}:{rpath}".format(rname=config['remotename'], rpath=config['remotepath'])
     
-    r = subprocess.call("rclone sync ./data/finance.ledger Nextcloud:/accounting/", shell = True)
+    r = subprocess.call(cmd, shell = True)
     return redirect(url_for('index'))
 
 @app.route('/reports')
 def reports():
-    r = subprocess.call("rclone sync Nextcloud:/accounting data/", shell = True)
+    cmd = "rclone sync {rname}:{rpath} data/".format(rname=config['remotename'], rpath=config['remotepath'])
+    r = subprocess.call(cmd, shell = True)
     
     reps = []
     reps.append(subprocess.check_output("ledger bal -f ./data/finance.ledger -C Assets", shell = True).decode("utf-8"))
@@ -64,4 +77,4 @@ def reports():
     return render_template('reports.html', reps=reps)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=False, host=config['hostip'], port=config['hostport'])

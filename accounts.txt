@@ -1,6 +1,0 @@
-Assets:Checking
-Assets:Saving
-Expenses:Food
-Expenses:Rent
-Income:Paycheck
-
