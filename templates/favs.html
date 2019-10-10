@@ -5,7 +5,7 @@
     <form action="/fsubmit" method="get">
         <div class="form-group">
             <label for="fselect">Recipient</label>
-            <select class="form-control" id="fselect">
+            <select class="form-control" name="fselect" id="fselect">
                 {% for f in favs %}
                 <option>{{ f }}</option>
                 {% endfor %}
@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label for"famount">Amount</label>
-            <input class="form-control" type="number" step="0.01" id="famount">
+            <input class="form-control" type="number" name="famount" step="0.01" id="famount">
         </div>
         <button type="submit" class="btn btn-dark my-1">Submit</button>
     </form>
