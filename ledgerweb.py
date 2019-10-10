@@ -18,6 +18,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    cmd = "rclone sync {rname}:{rpath}/finance.ledger  data/".format(rname=config['remotename'], rpath=config['remotepath'])
+    r = subprocess.call(cmd, shell=True)
+
     return render_template('index.html', ac=config['accounts'])
 
 @app.route('/submit', methods = ['GET'])
@@ -59,7 +62,7 @@ def submit():
     cmd = "rclone sync data/finance.ledger {rname}:{rpath}".format(rname=config['remotename'], rpath=config['remotepath'])
     
     r = subprocess.call(cmd, shell = True)
-    return redirect(url_for('index'))
+    return redirect(url_for('index', utd=True))
 
 @app.route('/reports')
 def reports():
