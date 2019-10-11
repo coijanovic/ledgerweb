@@ -3,90 +3,22 @@
 
 
 <div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <strong>Report 1:</strong> Balances
-        </button>
-      </h2>
-    </div>
+{% for r in reps %}
+    <div class="card">
+        <div class="card-header" id="heading{{ r[0] }}">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#report{{ r[0] }}" aria-expanded="true" aria-controls="{{ r[1] }}">
+                    <strong>Report {{ r[0] }}:</strong> {{ r[1] }}
+                </button>
+            </h2>
+        </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-          <pre>{{ reps[0]|safe }}</pre>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            <strong>Report 2:</strong> Uncleared Expenses
-        </button>
-      </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-          <pre>{{ reps[1]|safe }}</pre>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            <strong>Report 3:</strong> Expenses This month
-        </button>
-      </h2>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-          <pre>{{ reps[2]|safe }}</pre>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingFour">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            <strong>Report 4:</strong> Expenses last month
-        </button>
-      </h2>
-    </div>
-    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-      <div class="card-body">
-          <pre>{{ reps[3]|safe }}</pre>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingFive">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-            <strong>Report 5:</strong> Monthly Cashflow
-        </button>
-      </h2>
-    </div>
-    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
-      <div class="card-body">
-          <pre>{{ reps[4]|safe }}</pre>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingSix">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-            <strong>Report 6:</strong> Yearly Income
-        </button>
-      </h2>
-    </div>
-    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
-      <div class="card-body">
-          <pre>{{ reps[5]|safe }}</pre>
-      </div>
-    </div>
-  </div>
+        <div id="report{{ r[0] }}" class="collapse show" aria-labelledby="heading{{ r[0] }}" data-parent="#accordionExample">
+            <div class="card-body">
+                <pre>{{ r[2]|safe }}</pre>
+            </div>
+        </div>
+    </div>        
+{% endfor %}
 </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-# This is the config file for ledgerweb
+# This is the default default default config file for ledgerweb
 #
 # 1. flask
 hostip: 0.0.0.0
@@ -29,5 +29,5 @@ favs:
 reports:
 - name: Balances
   cmd: ledger bal -f data/finance.ledger -C Assets
-- name: Uncleared Expenses
-  cmd: ledger reg -f data/finance.ledger -U Expenses
+- name: Expenses this month
+  cmd: ledger bal -f data/finance.ledger -C --period="this month" Expenses
