@@ -72,11 +72,11 @@ def reports():
     
     reps = []
     reps.append(subprocess.check_output("ledger bal -f ./data/finance.ledger -C Assets", shell = True).decode("utf-8"))
-    reps.append(subprocess.check_output("ledger reg -f ./data/finance.ledger Expenses -U --register-format \"%D %P - %A - %T\n\"", shell = True).decode("utf-8"))
+    reps.append(subprocess.check_output("ledger reg -f ./data/finance.ledger Expenses -U --register-format \"%D %P - %A - %t\n\"", shell = True).decode("utf-8"))
     reps.append(subprocess.check_output("ledger bal -f ./data/finance.ledger Expenses -C --period=\"this month\" --period-sort \"(amount)\"", shell = True).decode("utf-8"))
     reps.append(subprocess.check_output("ledger bal -f ./data/finance.ledger Expenses -C --period=\"last month\" --period-sort \"(amount)\"", shell = True).decode("utf-8"))
-    reps.append(subprocess.check_output("ledger reg -f ./data/finance.ledger ^Expenses ^Income -n -M --register-format \"%D %P %A  %T\n\"", shell = True).decode("utf-8"))
-    reps.append(subprocess.check_output("ledger reg -f ./data/finance.ledger Income -Y --register-format \"%A  %T\n\"", shell = True).decode("utf-8"))
+    reps.append(subprocess.check_output("ledger reg -f ./data/finance.ledger ^Expenses ^Income -n -M --register-format \"%D %P %A %t\n\"", shell = True).decode("utf-8"))
+    reps.append(subprocess.check_output("ledger reg -f ./data/finance.ledger Income -Y --register-format \"%A  %t %T\n\"", shell = True).decode("utf-8"))
 
     return render_template('reports.html', reps=reps)
 
