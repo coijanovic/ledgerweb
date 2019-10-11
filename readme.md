@@ -37,10 +37,8 @@ Note: The config-file is only parsed on startup. If you change your configuratio
 |------------|------------------------------------------------------------------------------------------------|
 | hostip     | ip address used by flask, should be the ip of your server                                      |
 | hostport   | port used by flask, use 80 for (local) deployment                                              |
-|------------|------------------------------------------------------------------------------------------------|
 | remotename | name of the rclone remote to which you want to sync your ledger data                           |
 | remotepath | directory on remote to which you want to sync your ledger data                                 |
-|------------|------------------------------------------------------------------------------------------------|
 | currency   | currency used in ledger file                                                                   |
 | accounts   | a list of commonly used accounts (e.g. `Assets:Checking`) to be used as data for auto-complete |
 | favs       | often used transactions, with `from` and `to`-account
