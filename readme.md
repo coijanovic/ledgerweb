@@ -1,18 +1,46 @@
 # What is ledgerweb?
 
-Ledgerweb is intended to be run as a local webservice. It provides an easy way to add entries to a [ledger](https://ledger-cli.org)-file.
+[ledger-cli](https://ledger-cli.org) is great. It offers a powerful double-entry accounting system with all data in a plain text file.
+But its reliance on the command line make it not very accessible for "normal" people. This is where ledgerweb comes in: It provides an easy to use web-interface for adding entries to your ledger-file and viewing commonly used reports.
 
-# Dependencies
+# What is the intended use-case for ledgerweb?
 
-- `python3`
+ledger-web is intended to be run as a local website (only accessible from within your home network) on a Raspberry Pi or something similar.
+The data is automatically synced to a cloud storage provider of your choice using [rclone](https://rclone.org). 
+
+# Requirements
+
+1. A device to run the service (anything from a Raspberry Pi Zero W and up should work)
+2. Access to cloud storage compatible with rclone (see [rclone.org](https://rclone.org) for a full list). Note: you can also encrypt any supported cloud storage with rclone, which might be a good idea with sensible financial information.
+
+# Install
+
+1. Setup `python3` with the following packages:
     - `flask`
     - `subprocess`
-- `rclone`
+    - `pyyaml`
+2. Install `rclone` and setup your cloud storage
+3. Install `ledger`
+4. Clone this repository
+5. Customize your ledgerweb-instance by creating your own `config.yaml` file in the ledgerweb folder (see ch. config)
+6. Run the server with `python3 /path/to/ledgerweb/ledgerweb.py`
 
-# Install 
+# Config
 
-1. Clone this repository
-2. Setup your cloud storage with `rclone config` and edit line 45 in `ledgerweb.py` to match your configuration
-    - to only use local storage, remove line 45 from `ledgerweb.py`
-3. Modify `accounts.txt` to contain all accounts (e.g "Expenses:Food:Groceries") you use in your ledger-file. This used for auto-completion.
-3. `python3 ledgerweb.py`
+The configuration of ledgerweb is done in a [yaml](https://yaml.org) file. 
+Please create the file `config.yaml` for your own configuration. See `defaultconfig.yaml` for all available options and syntax.
+
+Note: The config-file is only parsed on startup. If you change your configuration, you have to stop flask (`Ctrl-C`) and start it again for your changes to be effective.j
+
+
+| Key        | Explanation                                                                                    |
+|------------|------------------------------------------------------------------------------------------------|
+| hostip     | ip address used by flask, should be the ip of your server                                      |
+| hostport   | port used by flask, use 80 for (local) deployment                                              |
+|------------|------------------------------------------------------------------------------------------------|
+| remotename | name of the rclone remote to which you want to sync your ledger data                           |
+| remotepath | directory on remote to which you want to sync your ledger data                                 |
+|------------|------------------------------------------------------------------------------------------------|
+| currency   | currency used in ledger file                                                                   |
+| accounts   | a list of commonly used accounts (e.g. `Assets:Checking`) to be used as data for auto-complete |
+| favs       | often used transactions, with `from` and `to`-account
