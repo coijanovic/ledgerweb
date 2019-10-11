@@ -13,7 +13,7 @@
             </h2>
         </div>
 
-        <div id="report{{ r[0] }}" class="collapse show" aria-labelledby="heading{{ r[0] }}" data-parent="#accordionExample">
+        <div id="report{{ r[0] }}" class="collapse{% if r[0] == 1%} show{% endif %}" aria-labelledby="heading{{ r[0] }}" data-parent="#accordionExample">
             <div class="card-body">
                 <pre>{{ r[2]|safe }}</pre>
             </div>
