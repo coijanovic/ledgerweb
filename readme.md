@@ -13,6 +13,8 @@ The data is automatically synced to a cloud storage provider of your choice usin
 1. A device to run the service (anything from a Raspberry Pi Zero W and up should work)
 2. Access to cloud storage compatible with rclone (see [rclone.org](https://rclone.org) for a full list). Note: you can also encrypt any supported cloud storage with rclone, which might be a good idea with sensible financial information.
 
+If you don't want to use rclone, you can change lines 18 and 19 (`sync_down` and `sync_up`) in `ledgerweb.py` to something that suits your needs (e.g. `rsync` if you want to sync your ledger data across your local network)
+
 # Install
 
 1. Setup `python3` with the following packages:
