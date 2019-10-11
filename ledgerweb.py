@@ -15,13 +15,13 @@ with open(configfile, 'r') as f:
     except yaml.YAMLError as exc:
         print(exc)
 
+sync_down = "rclone sync {rname}:{rpath}/finance.ledger  data/".format(rname=config['remotename'], rpath=config['remotepath'])
+sync_up =  "rclone sync data/finance.ledger {rname}:{rpath}".format(rname=config['remotename'], rpath=config['remotepath'])
+
 app = Flask(__name__)
 
 @app.route('/input')
 def input():
-    cmd = "rclone sync {rname}:{rpath}/finance.ledger  data/".format(rname=config['remotename'], rpath=config['remotepath'])
-    r = subprocess.call(cmd, shell=True)
-
     return render_template('input.html', ac=config['accounts'])
 
 @app.route('/submit', methods = ['GET'])
@@ -33,8 +33,7 @@ def submit():
     fromamount = request.args.get('fromamount') 
     toacc = request.args.get('toacc') 
     toamount = request.args.get('toamount') 
-
-    response = ('okay', str(transdate))
+    r = subprocess.call(sync_down, shell = True)
     
     if transclear == "on":
         c = " * "
@@ -59,16 +58,13 @@ def submit():
     ledgerfile.write("    " + fromacc + "          " + fromamount + "\n")
     ledgerfile.write("    " + toacc + "        " + toamount + "\n\n")
     ledgerfile.close()
-
-    cmd = "rclone sync data/finance.ledger {rname}:{rpath}".format(rname=config['remotename'], rpath=config['remotepath'])
     
-    r = subprocess.call(cmd, shell = True)
+    r = subprocess.call(sync_up, shell = True)
     return redirect(url_for('input'))
 
 @app.route('/reports')
 def reports():
-    cmd = "rclone sync {rname}:{rpath} data/".format(rname=config['remotename'], rpath=config['remotepath'])
-    r = subprocess.call(cmd, shell = True)
+    r = subprocess.call(sync_down, shell = True)
     
     reps = []
     reps.append(subprocess.check_output("ledger bal -f ./data/finance.ledger -C Assets", shell = True).decode("utf-8"))
@@ -81,19 +77,14 @@ def reports():
     return render_template('reports.html', reps=reps)
 
 @app.route('/')
-def favorites():
-    favs = list(config['favs'].keys())
-
-    return render_template('index.html', favs=favs)
+def index():
+    return render_template('index.html', favs=list(config['favs'].keys()))
 
 @app.route('/fsubmit', methods = ['GET'])
 def fsubmit():
     amount = request.args.get('famount')
     rep = request.args.get('fselect')
-
-    print(amount + " " + rep)
-    cmd = "rclone sync {rname}:{rpath} data/".format(rname=config['remotename'], rpath=config['remotepath'])
-    r = subprocess.call(cmd, shell = True)
+    r = subprocess.call(sync_down, shell = True)
     
     ledgerfile = open('data/finance.ledger', 'a')
     ledgerfile.write("{date} {rep}\n".format(date=time.strftime("%Y/%m/%d"), rep=rep))
@@ -102,10 +93,9 @@ def fsubmit():
     ledgerfile.write("    {to}   {amount}\n\n".format(to=config['favs'][rep]['to'], amount=amount))
     ledgerfile.close()
 
-    cmd = "rclone sync data/finance.ledger {rname}:{rpath}".format(rname=config['remotename'], rpath=config['remotepath'])
-    r = subprocess.call(cmd, shell = True)
+    r = subprocess.call(sync_up, shell = True)
 
-    return redirect(url_for('favorites'))
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=False, host=config['hostip'], port=config['hostport'])
