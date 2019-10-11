@@ -14,13 +14,20 @@ accounts:
 - Assets:Checking
 - Expenses:Food
 - Income:Paycheck
+
 favs:
-    EDEKA:
-        from: Assets:Checking
-        to: Expenses:Food
-    REWE:
-        from: Assets:Checking
-        to: Expenses:Food
-    Alnatura:
-        from: Assets:Checking
-        to: Expenses:Food
+- name: EDEKA
+  from: Assets:Checking
+  to: Expenses:Food
+- name: Rewe
+  from: Assets:Checking
+  to: Expenses:Food
+- name: Alnatura
+  from: Assets:Checking
+  to: Expenses:Food
+
+reports:
+- name: Balances
+  cmd: ledger bal -f data/finance.ledger -C Assets
+- name: Uncleared Expenses
+  cmd: ledger reg -f data/finance.ledger -U Expenses

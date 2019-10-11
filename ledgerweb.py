@@ -78,7 +78,11 @@ def reports():
 
 @app.route('/')
 def index():
-    return render_template('index.html', favs=list(config['favs'].keys()))
+    fa = []
+    for f in config['favs']:
+        fa.append(f['name'])
+
+    return render_template('index.html', favs=fa)
 
 @app.route('/fsubmit', methods = ['GET'])
 def fsubmit():
