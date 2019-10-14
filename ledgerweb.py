@@ -3,6 +3,7 @@ import subprocess
 import os.path
 import yaml
 import time
+import fileinput
 
 if os.path.exists('config.yaml'):
     configfile = 'config.yaml'
@@ -114,8 +115,19 @@ def clear():
 @app.route('/csubmit', methods = ['GET'])
 def csubmit():
     to_clear = [x.strip() for x in request.args.get('cselect').split("|")]
-    print(to_clear)
 
+    fs = "{date} {rep}".format(date=to_clear[0],rep=to_clear[1])
+    ts = "{date} * {rep}".format(date=to_clear[0],rep=to_clear[1])
+
+    with open('data/finance.ledger', 'r') as file:
+        data = file.read()
+
+    data = data.replace(fs,ts)
+
+    with open('data/finance.ledger', 'w') as file:
+        file.write(data)
+    
+    r = subprocess.call(sync_up, shell=True)
     return redirect(url_for('clear'))
 
 if __name__ == '__main__':
