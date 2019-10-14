@@ -111,5 +111,12 @@ def clear():
 
     return render_template('clear.html', uncleared=uncleared)
 
+@app.route('/csubmit', methods = ['GET'])
+def csubmit():
+    to_clear = [x.strip() for x in request.args.get('cselect').split("|")]
+    print(to_clear)
+
+    return redirect(url_for('clear'))
+
 if __name__ == '__main__':
     app.run(debug=False, host=config['hostip'], port=config['hostport'])
