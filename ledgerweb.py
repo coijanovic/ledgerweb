@@ -106,7 +106,7 @@ def fsubmit():
 def clear():
     r = subprocess.call(sync_down, shell=True)
     
-    uc_cmd = "ledger reg -U -f ~/Nextcloud/accounting/finance.ledger Expenses --register-format \"- rec: %P\n  date: %D\n  amount: %t\n\""
+    uc_cmd = "ledger reg -U -f data/finance.ledger Expenses --register-format \"- rec: %P\n  date: %D\n  amount: %t\n\""
     ledger_out = subprocess.check_output(uc_cmd, shell=True).decode('utf-8')
     uncleared = yaml.safe_load(ledger_out)
 
