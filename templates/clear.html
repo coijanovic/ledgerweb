@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <p class="lead m-3">The dropdown menu below contains all uncleared expenses in your ledgerfile.</p>    
+</div>
+<div clss="row">
+    <form action="/csubmit" method="get">
+        <div class="form-group">
+            <label for="cselect">Transaction</label>
+            <select class="form-control" name="cselect" id="cselect">
+                {% for t in uncleared %}
+                <option>{{ t['date'] }} | {{ t['rec'] }} | {{ t['amount'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-dark my-1">Clear</button>
+    </form>
+</div>
+{% endblock %}
