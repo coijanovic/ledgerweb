@@ -130,5 +130,14 @@ def csubmit():
     r = subprocess.call(sync_up, shell=True)
     return redirect(url_for('clear'))
 
+@app.route('/reloadconfig')
+def reloadconfig():
+    with open(configfile, 'r') as f:
+        try:
+            config = yaml.safe_load(f)
+        except yaml.YAMLError as exc:
+            print(exc)
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(debug=False, host=config['hostip'], port=config['hostport'])
