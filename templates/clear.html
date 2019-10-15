@@ -9,9 +9,11 @@
         <div class="form-group">
             <label for="cselect">Transaction</label>
             <select class="form-control" name="cselect" id="cselect">
+                {% if t is not none %}
                 {% for t in uncleared %}
                 <option>{{ t['date'] }} | {{ t['rec'] }} | {{ t['amount'] }}</option>
                 {% endfor %}
+                {% endif %}
             </select>
         </div>
         <button type="submit" class="btn btn-dark my-1">Clear</button>
